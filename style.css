@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+h1 {
+	color: white;
+	background-color: black;
+	font-family: "Nunito", serif;
+	text-align: center;
+	top: 21px;
+}
+	
+h2 {
+	color: white;
+	font-family: "Nunito", serif;
+	text-align: center;
+}
+
+html {
+	background-color: gray;
+}
+
+p {
+	color: white;
+	font-family: "Nunito", serif;
+	text-align: center;
+}
+
+a {
+	color: cyan;
+	font-family: "Nunito", serif;
+	text-align: center;
+}
+
+#nav {
+	color: white;
+	font-family: "Nunito", serif;
+	font-size: 25;
+	font-weight: bold;
+	text-decoration: none;
+	flex: 1;
+}
+
+#navbar {
+	width: 100%;
+	position: sticky;
+	background-color: black;
+	margin-top: -7px;
+ 	display: flex;
+	align-items: center;
+}
