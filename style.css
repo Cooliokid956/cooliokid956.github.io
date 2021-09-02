@@ -1,13 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
+:root {
+	--spacing: 8px;
+	--height: 8px;
+}
+
+#space {
+	height: var(--spacing);
+	margin-top: -21px;
+}
+
+#site {
+	margin-top: var(--spacing);
+}
+
 h1 {
 	color: white;
 	background-color: black;
 	font-family: "Nunito", serif;
 	text-align: center;
-	top: 21px;
 }
-	
+
 h2 {
 	color: white;
 	font-family: "Nunito", serif;
@@ -33,17 +46,20 @@ a {
 #nav {
 	color: white;
 	font-family: "Nunito", serif;
-	font-size: 25;
+	font-size: 25px;
 	font-weight: bold;
 	text-decoration: none;
-	flex: 1;
+	word-spacing: 100px;
 }
 
 #navbar {
-	width: 100%;
-	position: sticky;
+	width: calc(100% + 16px);
+	height: var(--height);
+	msargin-top: calc((var(--spacing) * -1) + (var(--height) * -1));
+	margin-top: -8px;
+	margin-left: -8px;
 	background-color: black;
-	margin-top: -7px;
- 	display: flex;
+	display: flex;
+	justify-content: center;
 	align-items: center;
 }
