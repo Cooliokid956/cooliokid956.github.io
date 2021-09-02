@@ -49,7 +49,7 @@ a {
 	font-size: 25px;
 	font-weight: bold;
 	text-decoration: none;
-	word-spacing: 100px;
+	/* hmm word-spacing: 100px; */
 }
 
 #navbar {
