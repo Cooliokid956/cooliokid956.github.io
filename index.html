@@ -17,7 +17,7 @@
 			document.querySelectorAll(".site").forEach(b=>b.setAttribute("hidden", "true"));
 			document.getElementById(site).removeAttribute("hidden");
 		}
-		if ("?debug" == "?debug") {
+		if (window.location.search == "?debug") {
 			document.getElementById("bg").setAttribute("style", "background-color: gray;");
 			alert("debug mode active");
 		}
