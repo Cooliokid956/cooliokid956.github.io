@@ -10,14 +10,14 @@
 <link href="style.css" rel="stylesheet" type="text/css"/>
 
 <html id="bg">
-	<div id="navbar"><p id="nav" onclick="showPage('test')">Placeholder New Page</p></div>
+	<div id="navbar"><p id="nav" onclick="showPage('test')">Bookmarklet<strike>s</strike></p></div>
 	<body>
 	<script>
 		function showPage(site) {
 			document.querySelectorAll(".site").forEach(b=>b.setAttribute("hidden", "true"));
 			document.getElementById(site).removeAttribute("hidden");
 		}
-		if (window.location.search == "?debug") {
+		if ("?debug" == "?debug") {
 			document.getElementById("bg").setAttribute("style", "background-color: gray;");
 			alert("debug mode active");
 		}
@@ -33,8 +33,10 @@
 			<p><a href="https://sm64js.com">sm64js</a>, a port of Mario 64 based on the <a href="https://github.com/n64decomp/sm64">decomp</a></p>
 		</div>
 		<div hidden="true" class="site" id="test">
-			<h1>Site Section 2</h1>
-			<p>ayo does this work<br>yooo it does</p>
+			<h1>Bookmarklet</h1>
+			<h2>BrightBox</h2>
+			<p>not really bright but hey it makes your whole screen darker (in most cases)</p>
+			<p><a href="javascript:var dimbox = document.createElement('div');dimbox.setAttribute('style', 'position: fixed; width: 100%; height: 100%; opacity: 50%; background-color: black; top: 0px; left: 0px;'); document.getElementsByTagName('html')[0].appendChild(dimbox);">drag this to your bookmarks bar</a></p>
 		</div>
 	</body>
 </html>
