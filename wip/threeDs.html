@@ -1,0 +1,29 @@
+<html>
+	<head>
+		<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+	</head>
+	<body>
+		<a-scene>
+			<a-box id="box" position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+			<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+			<a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+			<a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+			<a-sky color="#88FFF8"></a-sky>
+		</a-scene>
+		<script>
+			var rotarray = new Array(0, 45, 0);
+			var height = 0.5
+			var sineTimerSpin = 0
+			var sineTimerHeight = 0
+			function turn() {
+				sineTimerSpin += 0.05;
+				rotarray[1] += Math.sin(sineTimerSpin) * 5;
+				document.getElementById("box").setAttribute('rotation', rotarray.join(" "));
+				sineTimerHeight += 0.05;
+				height = Math.abs(Math.sin(sineTimerHeight));
+				document.getElementById("box").setAttribute('position', "-1 " + (height + 0.5) + " -3");
+			}
+			setInterval(turn, 16.666667);
+		</script>
+ 	</body>
+</html>
