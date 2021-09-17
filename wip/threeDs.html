@@ -1,9 +1,11 @@
 <html>
 	<head>
 		<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+		<script src="https://jeremyckahn.github.io/keydrown/dist/keydrown.min.js"></script>
 	</head>
 	<body>
 		<a-scene>
+			<a-entity id="player" camera look-controls position="0 1.6 0"></a-entity>
 			<a-box id="box" position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
 			<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
 			<a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
@@ -11,19 +13,37 @@
 			<a-sky color="#88FFF8"></a-sky>
 		</a-scene>
 		<script>
-			var rotarray = new Array(0, 45, 0);
-			var height = 0.5
-			var sineTimerSpin = 0
-			var sineTimerHeight = 0
+			var rotArray = new Array(0, 0, 0);
+			var rotCam = new Array(0, 0, 0);
+			var height = 0;
+			var playerHeight = 1.6;
+			var sineTimerSpin = 0;
+			var sineTimerHeight = 0;
+			var framerate = 60;
+			var v = 0;
+			function tick() {
+				turn();
+				physics();
+			}
 			function turn() {
-				sineTimerSpin += 0.05;
-				rotarray[1] += Math.sin(sineTimerSpin) * 5;
-				document.getElementById("box").setAttribute('rotation', rotarray.join(" "));
-				sineTimerHeight += 0.05;
-				height = Math.abs(Math.sin(sineTimerHeight));
+				sineTimerSpin += 3 / framerate;
+				rotArray[1] += (Math.sin(sineTimerSpin) * 300) / framerate;
+				document.getElementById("box").setAttribute('rotation', rotArray.join(" "));
+				sineTimerHeight += 3 / framerate;
+				height = Math.abs(Math.sin(sineTimerHeight)) * 2;
 				document.getElementById("box").setAttribute('position', "-1 " + (height + 0.5) + " -3");
 			}
-			setInterval(turn, 16.666667);
+			function physics() {
+				document.getElementById("player").getAttribute('position').x += Math.sin((Math.PI / 180) * document.getElementById("player").getAttribute('rotation').y) * (v * -1);
+				document.getElementById("player").getAttribute('position').z += Math.cos((Math.PI / 180) * document.getElementById("player").getAttribute('rotation').y) * (v * -1);
+				if (kd.W.isDown() && v < 0.1) {
+					v += 0.01;
+				}
+				if (!(kd.W.isDown())  && v > 0) {
+					v *= 0.9;
+				}
+			}
+			setInterval(tick, (1/framerate) * 1000);
 		</script>
  	</body>
 </html>
