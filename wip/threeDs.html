@@ -2,6 +2,7 @@
 	<head>
 		<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 		<script src="https://jeremyckahn.github.io/keydrown/dist/keydrown.min.js"></script>
+		<script src="https://cooliokid956.github.io/degMath.js/degMath.min.js"></script>
 	</head>
 	<body>
 		<a-scene>
@@ -17,7 +18,7 @@
 			var rotCam = new Array(0, 0, 0);
 			var height = 0;
 			var playerHeight = 1.6;
-			var sineTimerSpin = 0;
+			var sineTimerSpin = 0; 
 			var sineTimerHeight = 0;
 			var framerate = 60;
 			var v = 0;
@@ -34,13 +35,16 @@
 				document.getElementById("box").setAttribute('position', "-1 " + (height + 0.5) + " -3");
 			}
 			function physics() {
-				document.getElementById("player").getAttribute('position').x += Math.sin((Math.PI / 180) * document.getElementById("player").getAttribute('rotation').y) * (v * -1);
-				document.getElementById("player").getAttribute('position').z += Math.cos((Math.PI / 180) * document.getElementById("player").getAttribute('rotation').y) * (v * -1);
-				if (kd.W.isDown() && v < 0.1) {
-					v += 0.01;
-				}
-				if (!(kd.W.isDown())  && v > 0) {
-					v *= 0.9;
+				document.getElementById("player").getAttribute('position').x += d.Math("sin",document.getElementById("player").getAttribute('rotation').y) * (v * -1);
+				document.getElementById("player").getAttribute('position').z += d.Math("cos",document.getElementById("player").getAttribute('rotation').y) * (v * -1);
+				if (kd.W.isDown()) {
+					if (v < 0.1) {
+						v += 0.01;
+					}
+				} else {
+					if (v > 0) {
+						v *= 0.9;
+					}
 				}
 			}
 			setInterval(tick, (1/framerate) * 1000);
