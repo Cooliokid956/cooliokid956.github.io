@@ -18,25 +18,26 @@
 			var rotCam = new Array(0, 0, 0);
 			var height = 0;
 			var playerHeight = 1.6;
-			var sineTimerSpin = 0; 
+			var sineTimerSpin = 45; 
 			var sineTimerHeight = 0;
-			var framerate = 60;
+			var s = 60;
 			var v = 0;
 			function tick() {
 				turn();
 				physics();
 			}
 			function turn() {
-				sineTimerSpin += 3 / framerate;
-				rotArray[1] += (Math.sin(sineTimerSpin) * 300) / framerate;
+				/* sineTimerSpin += 125/s;
+				rotArray[1] += (Math.sin(d2r(sineTimerSpin)) * 300)/s; */
+				rotArray[1] += 300/s;
 				document.getElementById("box").setAttribute('rotation', rotArray.join(" "));
-				sineTimerHeight += 3 / framerate;
-				height = Math.abs(Math.sin(sineTimerHeight)) * 2;
+				sineTimerHeight += 150/s;
+				height = Math.abs(Math.sin(d2r(sineTimerHeight))) * 2;
 				document.getElementById("box").setAttribute('position', "-1 " + (height + 0.5) + " -3");
 			}
 			function physics() {
-				document.getElementById("player").getAttribute('position').x += d.Math("sin",document.getElementById("player").getAttribute('rotation').y) * (v * -1);
-				document.getElementById("player").getAttribute('position').z += d.Math("cos",document.getElementById("player").getAttribute('rotation').y) * (v * -1);
+				document.getElementById("player").getAttribute('position').x += Math.sin(d2r(document.getElementById("player").getAttribute('rotation').y)) * (v * -1);
+				document.getElementById("player").getAttribute('position').z += Math.cos(d2r(document.getElementById("player").getAttribute('rotation').y)) * (v * -1);
 				if (kd.W.isDown()) {
 					if (v < 0.1) {
 						v += 0.01;
@@ -47,7 +48,7 @@
 					}
 				}
 			}
-			setInterval(tick, (1/framerate) * 1000);
+			setInterval(tick, (1/s) * 1000);
 		</script>
  	</body>
 </html>
