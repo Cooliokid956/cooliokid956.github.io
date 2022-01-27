@@ -14,27 +14,18 @@
 	margin-top: var(--spacing);
 }
 
-h1 {
+.text {
 	color: white;
-	background-color: black;
 	font-family: "Nunito", serif;
 	text-align: center;
 }
 
-h2 {
-	color: white;
-	font-family: "Nunito", serif;
-	text-align: center;
+h1 {
+	background-color: black;
 }
 
 html {
 	background-color: black;
-}
-
-p {
-	color: white;
-	font-family: "Nunito", serif;
-	text-align: center;
 }
 
 a {
