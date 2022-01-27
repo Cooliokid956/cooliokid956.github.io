@@ -54,6 +54,7 @@ a {
 
 #navbar {
 	position: fixed;
+	left: 0px;
 	width: 100%;
 	height: var(--height);
 	msargin-top: calc((var(--spacing) * -1) + (var(--height) * -1));
