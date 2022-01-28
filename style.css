@@ -21,7 +21,7 @@ h1 {
 	text-align: center;
 }
 
-a, p, h2, h3, h4, h5, h6 {
+a, p, strike, b, strong, h2, h3, h4, h5, h6 {
 	color: white;
 	font-family: "Nunito", serif;
 	text-align: center;
