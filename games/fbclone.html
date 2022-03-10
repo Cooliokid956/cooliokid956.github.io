@@ -1,0 +1,92 @@
+<html>
+	<div id="score"></div>
+<div id="bird"></div>
+</html>
+<style>
+html {
+	background: #78C8FF;
+	overflow: hidden;
+	touch-action: none;
+}
+
+#bird {
+	position: absolute;
+	background-color: purple;
+	width: 10vh;
+	height: 8vh;
+	top: -5vh;
+	left: 4vh;
+}
+
+#score {
+	position: absolute;
+	background-color: white;
+	z-index: 2;
+	width: 15vw;
+	height: 15vw;
+	left: 50%;
+	top: 3%;
+	text-align: center;
+	font-size: 13vw;
+	transform: translate(-50%);
+}
+</style>
+<script>
+var yVel = 0
+var y = 30
+var speed = 1
+var obstacles = []
+var loops = 0
+var score = 0
+document.documentElement.addEventListener("click",() => {
+	yVel = -1.6
+	if (window.dead == true) {
+		obstacles.forEach((a)=>{a.remove()})
+		obstacles = []
+		obstacle(Math.random()*window.innerHeight*0.4+window.innerHeight*0.3)
+		obstacle(Math.random()*window.innerHeight*0.4+window.innerHeight*0.3)
+		obstacle(Math.random()*window.innerHeight*0.4+window.innerHeight*0.3)
+		loops = 0
+		score = 0
+		y = 30
+		yVel = 0
+		window.dead = false
+		window.le = setInterval("loop()",1000/60)
+		window.el = setInterval("obstacle(Math.random()*window.innerHeight*0.4+window.innerHeight*0.3)",1300)
+	}
+})
+function loop(){
+	loops++
+	let scored = false
+	yVel += 0.085;
+	y += yVel*(window.innerHeight*0.01)
+	obstacles.forEach((a,b)=>{a.style.left = (150+b*80 - speed*loops) * (window.innerHeight*0.01) + "px"})
+	document.getElementById("bird").style.transform = "translateY("+y+"px) rotate("+(Math.atan2(yVel,speed)*(180/Math.PI))+"deg)"
+	obstacles.forEach((a,b)=>{
+		if (b == score || b == score - 1){
+			if (parseFloat(a.style.left) <= 14 * (window.innerHeight*0.01) && 0 <= parseFloat(a.style.left)){
+				if (!(parseFloat(a.style.top) - (25 * (window.innerHeight*0.01)) <= y && y <= parseFloat(a.style.top) - (5 * (window.innerHeight*0.01)))){
+					clearInterval(window.le);
+					clearInterval(window.el);
+					window.dead = true;
+				} else if (b == score){
+					scored = true
+				}
+			}
+		}
+	})
+	score += 1*scored
+	document.getElementById("score").innerText = score
+}
+function obstacle(y){
+	obstacles.push(document.createElement("div"));
+	obstacles[obstacles.length-1].setAttribute("style","position: absolute; background-color: darkgreen; width: 10vh; height: 100vh; top: "+y+"px; left: "+(-20*(window.innerHeight*0.01))+"px");
+	obstacles[obstacles.length-1].appendChild(document.createElement("div")).setAttribute("style","position: absolute; background-color: darkgreen; width: 10vh; height: 100vh; top: "+(window.innerHeight*-1.3)+"px");
+	document.getElementsByTagName("html")[0].appendChild(obstacles[obstacles.length-1]);
+}
+obstacle(Math.random()*window.innerHeight*0.4+window.innerHeight*0.3)
+obstacle(Math.random()*window.innerHeight*0.4+window.innerHeight*0.3)
+obstacle(Math.random()*window.innerHeight*0.4+window.innerHeight*0.3)
+window.le = setInterval("loop()",1000/60)
+window.el = setInterval("obstacle(Math.random()*window.innerHeight*0.4+window.innerHeight*0.3)",1000/speed)
+</script>
