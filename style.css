@@ -21,7 +21,7 @@ h1 {
 	text-align: center;
 }
 
-a, p, strike, b, strong, h2, h3, h4, h5, h6 {
+p, s, b, strong, h2, h3, h4, h5, h6 {
 	color: white;
 	font-family: "Nunito", serif;
 	text-align: center;
@@ -31,21 +31,32 @@ html {
 	background-color: black;
 }
 
+button {
+	border-radius: 30px;
+	font-size: 15px;
+	padding: 10px;
+}
+
+a {
+	color: cyan;
+}
+
 #nav {
 	color: white;
 	font-family: "Nunito", serif;
 	font-size: 25px;
 	font-weight: bold;
 	text-decoration: none;
+	cursor: pointer;
+	position: relative;
+	top: 10px;
 	/* hmm word-spacing: 100px; */
 }
 
-#navbar {
-	position: fixed;
-	left: 0px;
-	width: 100%;
-	height: var(--height);
-	msargin-top: calc((var(--spacing) * -1) + (var(--height) * -1));
-	background-color: black;
-	align-items: center;
+#nav::after {
+	content: "\00a0-";
+}
+
+#nav:last-child::after {
+	content: "";
 }
