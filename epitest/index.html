@@ -1,0 +1,13 @@
+<title>Photosensitivity Test</title>
+<script>
+	var toggle = false;
+	document.documentElement.addEventListener("click",()=>{ toggle =! toggle });
+	function randomColor() {
+		if (toggle) {
+			document.documentElement.style.background="rgb("+Math.round(Math.random())*255+","+Math.round(Math.random())*255+","+Math.round(Math.random())*255+")"
+		} else {
+			b=Math.round(Math.random())*255;document.documentElement.style.background="rgb("+b+","+b+","+b+")"
+		}
+	};
+	setInterval(randomColor,1/prompt("how many fps (flash per second (attempts))")*1000);
+</script>
