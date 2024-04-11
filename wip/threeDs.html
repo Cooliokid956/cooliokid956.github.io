@@ -27,6 +27,7 @@
 			var playerVel = new Array(0, 0, 0);
 			let accel = .1
 			let friction = .85
+			let gravity = 0.2
 
 			function applyVel(x, y, z) {
 				playerVel[0] -= Math.sin(d2r(document.getElementById("player").getAttribute('rotation').y + 90)) * x
@@ -57,6 +58,7 @@
 					 (kd.SPACE.isDown() && playerPos.y == playerHeight) ? .4 : 0,
 					 kd.W.isDown() ? accel : (kd.S.isDown() ? -accel : 0)
 				)
+				playerVel[1] -= gravity
 				
 				playerVel[0] *= friction
 				playerVel[2] *= friction
