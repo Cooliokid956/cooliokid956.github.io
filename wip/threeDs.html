@@ -39,7 +39,7 @@
 			}
 			function physics() {
 				v += kd.W.isDown() ? 0.01 : 0;
-				v += kd.S.isDown() ? -0.01 : 0;
+				v -= kd.S.isDown() ? 0.01 : 0;
 				
 				v = clamp(v*.9, -0.1, 0.1)
 
