@@ -2,7 +2,6 @@
 	<head>
 		<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 		<script src="https://jeremyckahn.github.io/keydrown/dist/keydrown.min.js"></script>
-		<script src="https://cooliokid956.github.io/degMath.js/degMath.min.js"></script>
 	</head>
 	<body>
 		<a-scene>
@@ -14,6 +13,8 @@
 			<a-sky color="#88FFF8"></a-sky>
 		</a-scene>
 		<script>
+			const d2r = a => a*Math.PI/180; // simple
+			
 			var rotArray = new Array(0, 0, 0);
 			var rotCam = new Array(0, 0, 0);
 			var height = 0;
