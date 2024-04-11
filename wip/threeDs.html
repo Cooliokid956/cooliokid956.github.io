@@ -23,9 +23,10 @@
 			var sineTimerSpin = 45; 
 			var sineTimerHeight = 0;
 			var s = 60;
-			var v = 0;
+
 			var playerVel = new Array(0, 0, 0);
-			let accel = .2
+			let accel = .1
+			let friction = .85
 
 			function applyVel(x, y, z) {
 				playerVel[0] -= Math.sin(d2r(document.getElementById("player").getAttribute('rotation').y + 90)) * x
@@ -50,15 +51,26 @@
 				document.getElementById("box").setAttribute('position', "-1 " + (height + 0.5) + " -3");
 			}
 			function physics() {
-				applyVel(kd.A.isDown() ? accel : (kd.D.isDown() ? -accel : 0), 0, kd.W.isDown() ? accel : (kd.S.isDown() ? -accel : 0))
-				
-				playerVel[0] *= .9
-				playerVel[1] *= .9
-				playerVel[2] *= .9
-
 				let playerPos = document.getElementById("player").getAttribute('position')
+
+				applyVel(kd.A.isDown() ? accel : (kd.D.isDown() ? -accel : 0),
+					 (kd.SPACE.isDown() && playerPos.y == playerHeight) ? .4 : 0,
+					 kd.W.isDown() ? accel : (kd.S.isDown() ? -accel : 0)
+				)
+				
+				playerVel[0] *= friction
+				playerVel[2] *= friction
+				
+				playerVel[1] *= friction
+
 				playerPos.x += playerVel[0];
 				playerPos.z += playerVel[2];
+
+				playerPos.y += playerVel[1];
+				if (playerPos.y < playerHeight) {
+					playerPos.y = playerHeight
+					playerVel[1] = 0
+				}
 			}
 			setInterval(tick, (1/s) * 1000);
 		</script>
