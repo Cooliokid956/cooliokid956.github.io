@@ -24,6 +24,11 @@
 			var sineTimerHeight = 0;
 			var s = 60;
 			var v = 0;
+			var playerVel = new Array(0, 0, 0);
+
+			function applyVel(x, y, z) {
+				playerVel[0] += Math.sin(d2r(document.getElementById("player").getAttribute('rotation').y)) * v
+			}
 			function tick() {
 				turn();
 				physics();
@@ -41,10 +46,12 @@
 				v += kd.W.isDown() ? 0.01 : 0;
 				v -= kd.S.isDown() ? 0.01 : 0;
 				
-				v = clamp(v*.9, -0.1, 0.1)
+				playerVel[0] *= .9
+				playerVel[1] *= .9
+				playerVel[2] *= .9
 
-				document.getElementById("player").getAttribute('position').x -= Math.sin(d2r(document.getElementById("player").getAttribute('rotation').y)) * v;
-				document.getElementById("player").getAttribute('position').z -= Math.cos(d2r(document.getElementById("player").getAttribute('rotation').y)) * v;
+				document.getElementById("player").getAttribute('position').x += playerVel[0];
+				document.getElementById("player").getAttribute('position').z += playerVel[2];
 			}
 			setInterval(tick, (1/s) * 1000);
 		</script>
