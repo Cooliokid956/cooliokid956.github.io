@@ -27,7 +27,7 @@
 			var playerVel = new Array(0, 0, 0);
 			let accel = .1
 			let friction = .85
-			let gravity = 0.2
+			let gravity = .03
 
 			function applyVel(x, y, z) {
 				playerVel[0] -= Math.sin(d2r(document.getElementById("player").getAttribute('rotation').y + 90)) * x
