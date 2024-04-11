@@ -4,14 +4,6 @@
 		<script src="https://jeremyckahn.github.io/keydrown/dist/keydrown.min.js"></script>
 	</head>
 	<body>
-		<a-scene>
-			<a-entity id="player" camera look-controls position="0 1.6 0"></a-entity>
-			<a-box id="box" position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-			<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-			<a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-			<a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-			<a-sky color="#88FFF8"></a-sky>
-		</a-scene>
 		<script>
 			const d2r = a => a*Math.PI/180; // simple
 			const clamp = (a, b, c) => Math.min(Math.max(a, b), c)
@@ -27,7 +19,7 @@
 			var playerVel = new Array(0, 0, 0);
 			let accel = .1
 			let friction = .85
-			let gravity = .03
+			let gravity = .01
 
 			function applyVel(x, y, z) {
 				playerVel[0] -= Math.sin(d2r(document.getElementById("player").getAttribute('rotation').y + 90)) * x
@@ -55,8 +47,8 @@
 				let playerPos = document.getElementById("player").getAttribute('position')
 
 				applyVel(kd.A.isDown() ? accel : (kd.D.isDown() ? -accel : 0),
-					 (kd.SPACE.isDown() && playerPos.y == playerHeight) ? .4 : 0,
-					 kd.W.isDown() ? accel : (kd.S.isDown() ? -accel : 0)
+					(kd.SPACE.isDown() && playerPos.y == playerHeight) ? .4 : 0,
+					(kd.W.isDown() ? accel : (kd.S.isDown() ? -accel : 0))
 				)
 				playerVel[1] -= gravity
 				
@@ -76,5 +68,13 @@
 			}
 			setInterval(tick, (1/s) * 1000);
 		</script>
+		<a-scene>
+			<a-entity id="player" camera look-controls position="0 1.6 0"></a-entity>
+			<a-box id="box" position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+			<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+			<a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+			<a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+			<a-sky color="#88FFF8"></a-sky>
+		</a-scene>
  	</body>
 </html>
