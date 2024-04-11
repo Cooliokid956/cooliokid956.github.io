@@ -27,11 +27,11 @@
 			var playerVel = new Array(0, 0, 0);
 
 			function applyVel(x, y, z) {
-				playerVel[0] -= Math.sin(d2r(document.getElementById("player").getAttribute('rotation').y)) * x
-				playerVel[2] -= Math.cos(d2r(document.getElementById("player").getAttribute('rotation').y)) * x
+				playerVel[0] -= Math.sin(d2r(document.getElementById("player").getAttribute('rotation').y + 90)) * x
+				playerVel[2] -= Math.cos(d2r(document.getElementById("player").getAttribute('rotation').y + 90)) * x
 
-				playerVel[0] -= Math.cos(d2r(document.getElementById("player").getAttribute('rotation').y)) * z
-				playerVel[2] -= Math.sin(d2r(document.getElementById("player").getAttribute('rotation').y)) * z
+				playerVel[0] -= Math.sin(d2r(document.getElementById("player").getAttribute('rotation').y)) * z
+				playerVel[2] -= Math.cos(d2r(document.getElementById("player").getAttribute('rotation').y)) * z
 
 				playerVel[1] += y
 			}
@@ -51,9 +51,9 @@
 			function physics() {
 				applyVel(x, 0, kd.W.isDown() ? 0.01 : (kd.S.isDown() ? -0.01 : 0))
 				
-				playerVel[0] *= .9
-				playerVel[1] *= .9
-				playerVel[2] *= .9
+				playerVel[0] *= .99
+				playerVel[1] *= .99
+				playerVel[2] *= .99
 
 				document.getElementById("player").getAttribute('position').x += playerVel[0];
 				document.getElementById("player").getAttribute('position').z += playerVel[2];
