@@ -25,6 +25,7 @@
 			var s = 60;
 			var v = 0;
 			var playerVel = new Array(0, 0, 0);
+			let accel = .1
 
 			function applyVel(x, y, z) {
 				playerVel[0] -= Math.sin(d2r(document.getElementById("player").getAttribute('rotation').y + 90)) * x
@@ -49,14 +50,15 @@
 				document.getElementById("box").setAttribute('position', "-1 " + (height + 0.5) + " -3");
 			}
 			function physics() {
-				applyVel(x, 0, kd.W.isDown() ? 0.01 : (kd.S.isDown() ? -0.01 : 0))
+				applyVel(kd.D.isDown() ? accel : (kd.A.isDown() ? -accel : 0), 0, kd.W.isDown() ? accel : (kd.S.isDown() ? -accel : 0))
 				
 				playerVel[0] *= .99
 				playerVel[1] *= .99
 				playerVel[2] *= .99
 
-				document.getElementById("player").getAttribute('position').x += playerVel[0];
-				document.getElementById("player").getAttribute('position').z += playerVel[2];
+				let playerPos = document.getElementById("player").getAttribute('position')
+				playerPos.x += playerVel[0];
+				playerPos.z += playerVel[2];
 			}
 			setInterval(tick, (1/s) * 1000);
 		</script>
