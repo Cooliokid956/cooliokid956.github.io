@@ -18,7 +18,7 @@
 					this.sineTimerHeight = null
 				},
 				tick: function(time, delta) {
-					if (!this.el.object3D) {return 0};
+					if (typeof this.el.object3D == "undefined") {return 0};
 					
 					this.el.object3D.rotation.y += 300*delta;
 					this.sineTimerHeight += 150*delta;
