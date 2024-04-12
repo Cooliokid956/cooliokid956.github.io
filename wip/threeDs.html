@@ -27,6 +27,7 @@
 			var playerVel = new Array(0, 0, 0)
 			let accel = .1
 			let friction = .85
+			let drag = .99
 			let gravity = .01
 
 			function applyVel(x, y, z) {
@@ -38,6 +39,9 @@
 
 				playerVel[1] += y
 			}
+			function grounded() {
+				return playerPos.y == playerHeight
+			}
 			function tick() {
 				physics();
 			}
@@ -45,24 +49,23 @@
 				let playerPos = document.getElementById("player").getAttribute('position')
 
 				applyVel(kd.A.isDown() ? accel : (kd.D.isDown() ? -accel : 0),
-					(kd.SPACE.isDown() && playerPos.y == playerHeight) ? .4 : 0,
+					(kd.SPACE.isDown() && grounded()) ? .5 : 0,
 					(kd.W.isDown() ? accel : (kd.S.isDown() ? -accel : 0))
 				)
 				playerVel[1] -= gravity
 				
-				playerVel[0] *= friction
-				playerVel[2] *= friction
+				playerVel[0] *= grounded() ? friction : drag
+				playerVel[2] *= grounded() ? friction : drag
 				
-				playerVel[1] *= friction
+				playerVel[1] *= drag
 
 				playerPos.x += playerVel[0];
 				playerPos.z += playerVel[2];
 
-				playerPos.y += playerVel[1];
-				if (playerPos.y < playerHeight) {
+				if (playerPos.y + playerVel[1] < playerHeight) {
 					playerPos.y = playerHeight
 					playerVel[1] = 0
-				}
+				} else { playerPos.y += playerVel[1]; }
 			}
 			setInterval(tick, (1/60) * 1000);
 		</script>
