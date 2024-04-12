@@ -14,10 +14,10 @@
 				schema: {
 					sineTimerHeight: { type: "number" }
 				},
-				init: () => {
+				init: function() {
 					this.sineTimerHeight = null
 				},
-				tick: (time, delta) => {
+				tick: function(time, delta) {
 					if (!this.el.object3D) {return 0};
 					
 					this.el.object3D.rotation.y += 300*delta;
