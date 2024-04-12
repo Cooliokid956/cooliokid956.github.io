@@ -7,15 +7,19 @@
 		<script>
 			const d2r = a => a*Math.PI/180; // simple
 			const clamp = (a, b, c) => Math.min(Math.max(a, b), c)
-			
-			var rotArray = new Array(0, 0, 0);
-			var rotCam = new Array(0, 0, 0);
-			var height = 0;
-			var playerHeight = 1.6;
-			var sineTimerSpin = 45; 
-			var sineTimerHeight = 0;
-			var s = 60;
 
+			AFRAME.registerComponent('bounce', {
+				schema = {
+					sineTimerHeight: { type = "number" }
+				},
+				tick = (time, delta) => {
+					this.el.object3D.rotation.y += 300*delta;
+					this.el.getAttribute('bounce').sineTimerHeight += 150*delta;
+					this.el.object3D.position.y = Math.abs(Math.sin(d2r(this.el.getAttribute('bounce').sineTimerHeight))) * 2 + 0.5;
+				}
+			};
+
+			var playerHeight = 1.6;
 			var playerVel = new Array(0, 0, 0);
 			let accel = .1
 			let friction = .85
@@ -31,17 +35,7 @@
 				playerVel[1] += y
 			}
 			function tick() {
-				turn();
 				physics();
-			}
-			function turn() {
-				/* sineTimerSpin += 125/s;
-				rotArray[1] += (Math.sin(d2r(sineTimerSpin)) * 300)/s; */
-				rotArray[1] += 300/s;
-				document.getElementById("box").setAttribute('rotation', rotArray.join(" "));
-				sineTimerHeight += 150/s;
-				height = Math.abs(Math.sin(d2r(sineTimerHeight))) * 2;
-				document.getElementById("box").setAttribute('position', "-1 " + (height + 0.5) + " -3");
 			}
 			function physics() {
 				let playerPos = document.getElementById("player").getAttribute('position')
@@ -70,7 +64,7 @@
 		</script>
 		<a-scene>
 			<a-entity id="player" camera look-controls position="0 1.6 0"></a-entity>
-			<a-box id="box" position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+			<a-box id="box" bounce position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
 			<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
 			<a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
 			<a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
