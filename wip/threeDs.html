@@ -5,16 +5,16 @@
 	</head>
 	<body>
 		<script>
-			window.onerror=function(msg,url,ln,col,err){alert('Error\n\n'+msg+'\nLine '+ln+'\nColumn '+col+'\nStack Trace\n'+err);}
+			window.onerror=function(msg,url,ln,col,err){alert('Error\n\n'+msg+'\nLine '+ln+'\nColumn '+col+'\nStack Trace\n'+err);};
 			
 			const d2r = a => a*Math.PI/180; // simple
 			const clamp = (a, b, c) => Math.min(Math.max(a, b), c)
 
 			AFRAME.registerComponent('bounce', {
-				schema = {
+				schema: {
 					sineTimerHeight: { type = "number" }
 				},
-				tick = (time, delta) => {
+				tick: (time, delta) => {
 					this.el.object3D.rotation.y += 300*delta;
 					this.el.getAttribute('bounce').sineTimerHeight += 150*delta;
 					this.el.object3D.position.y = Math.abs(Math.sin(d2r(this.el.getAttribute('bounce').sineTimerHeight))) * 2 + 0.5;
