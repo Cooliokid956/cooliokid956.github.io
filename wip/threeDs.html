@@ -44,7 +44,7 @@
 					this.playerVel[1] += y
 				},
 				grounded: () => {
-					return this.el.object3D.position == this.playerHeight
+					return this.el.object3D.position.y == this.playerHeight
 				},
 				tick: (time, delta) => {
 					if (typeof this.el.object3D == "undefined") {return 0};
