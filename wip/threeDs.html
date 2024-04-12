@@ -14,12 +14,15 @@
 				schema: {
 					sineTimerHeight: { type: "number" }
 				},
+				init: () => {
+					this.sineTimerHeight = null
+				},
 				tick: (time, delta) => {
 					if (!this.el.object3D) {return 0};
 					
 					this.el.object3D.rotation.y += 300*delta;
-					this.el.getAttribute('bounce').sineTimerHeight += 150*delta;
-					this.el.object3D.position.y = Math.abs(Math.sin(d2r(this.el.getAttribute('bounce').sineTimerHeight))) * 2 + 0.5;
+					this.sineTimerHeight += 150*delta;
+					this.el.object3D.position.y = Math.abs(Math.sin(d2r(this.sineTimerHeight))) * 2 + 0.5;
 				}
 			});
 
