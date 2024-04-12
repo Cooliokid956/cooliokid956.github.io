@@ -6,8 +6,7 @@
 	<body>
 		<script>
 			window.onerror=function(msg,url,ln,col,err){alert('Error\n\n'+msg+'\nLine '+ln+'\nColumn '+col+'\nStack Trace\n'+err);};
-			
-			const d2r = a => a*Math.PI/180 // simple
+
 			const clamp = (a, b, c) => Math.min(Math.max(a, b), c)
 
 			AFRAME.registerComponent('bounce', {
@@ -22,55 +21,61 @@
 					this.el.object3D.position.y = Math.abs(Math.sin(d2r(time))) * 2 + 0.5;
 				}
 			});
+			
+			AFRAME.registerComponent('controller', {
+				schema: {
+					jumpHeight: { default: .5 },
+					playerHeight: { default: 1.6 },
+					accel: { default: .1 },
+					friction: { default: .85 },
+					drag: { default: .99 },
+					gravity: { default: .01 }
+				},
+				init: () => {
+					this.playerVel = new Array(0, 0, 0)
+				},
+				applyVel: (x, y, z) => {
+					this.playerVel[0] -= Math.sin(THREE.MathUtils.radToDeg(this.el.object3D.rotation.y + 90)) * x
+					this.playerVel[2] -= Math.cos(THREE.MathUtils.radToDeg(this.el.object3D.rotation.y + 90)) * x
 
-			var playerHeight = 1.6
-			var playerVel = new Array(0, 0, 0)
-			let accel = .1
-			let friction = .85
-			let drag = .99
-			let gravity = .01
+					this.playerVel[0] -= Math.sin(THREE.MathUtils.radToDeg(this.el.object3D.rotation.y)) * z
+					this.playerVel[2] -= Math.cos(THREE.MathUtils.radToDeg(this.el.object3D.rotation.y)) * z
 
-			function applyVel(x, y, z) {
-				playerVel[0] -= Math.sin(d2r(document.getElementById("player").getAttribute('rotation').y + 90)) * x
-				playerVel[2] -= Math.cos(d2r(document.getElementById("player").getAttribute('rotation').y + 90)) * x
+					this.playerVel[1] += y
+				},
+				grounded: () => {
+					return this.el.object3D.position == this.playerHeight
+				},
+				tick: (time, delta) => {
+					if (typeof this.el.object3D == "undefined") {return 0};
+					var o = this.data;
+					
+					let playerPos = this.el.object3D.position
 
-				playerVel[0] -= Math.sin(d2r(document.getElementById("player").getAttribute('rotation').y)) * z
-				playerVel[2] -= Math.cos(d2r(document.getElementById("player").getAttribute('rotation').y)) * z
+					this.applyVel(kd.A.isDown() ? o.accel : (kd.D.isDown() ? -o.accel : 0),
+						(kd.SPACE.isDown() && this.grounded()) ? .5 : 0,
+						(kd.W.isDown() ? o.accel : (kd.S.isDown() ? -o.accel : 0))
+					)
 
-				playerVel[1] += y
-			}
-			function grounded() {
-				return playerPos.y == playerHeight
-			}
-			function tick() {
-				physics();
-			}
-			function physics() {
-				let playerPos = document.getElementById("player").getAttribute('position')
+					playerVel[1] -= o.gravity
 
-				applyVel(kd.A.isDown() ? accel : (kd.D.isDown() ? -accel : 0),
-					(kd.SPACE.isDown() && grounded()) ? .5 : 0,
-					(kd.W.isDown() ? accel : (kd.S.isDown() ? -accel : 0))
-				)
-				playerVel[1] -= gravity
-				
-				playerVel[0] *= grounded() ? friction : drag
-				playerVel[2] *= grounded() ? friction : drag
-				
-				playerVel[1] *= drag
+					playerVel[0] *= this.grounded() ? o.friction : o.drag
+					playerVel[2] *= this.grounded() ? o.friction : o.drag
 
-				playerPos.x += playerVel[0];
-				playerPos.z += playerVel[2];
+					playerVel[1] *= o.drag
 
-				if (playerPos.y + playerVel[1] < playerHeight) {
-					playerPos.y = playerHeight
-					playerVel[1] = 0
-				} else { playerPos.y += playerVel[1]; }
-			}
-			setInterval(tick, (1/60) * 1000);
+					playerPos.x += this.playerVel[0];
+					playerPos.z += this.playerVel[2];
+
+					if (playerPos.y + this.playerVel[1] < o.playerHeight) {
+						playerPos.y = o.playerHeight
+						this.playerVel[1] = 0
+					} else { playerPos.y += this.playerVel[1]; }
+				}
+			});
 		</script>
 		<a-scene>
-			<a-entity id="player" camera look-controls position="0 1.6 0"></a-entity>
+			<a-entity id="player" controller camera look-controls position="0 1.6 0"></a-entity>
 			<a-box id="box" bounce position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
 			<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
 			<a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
