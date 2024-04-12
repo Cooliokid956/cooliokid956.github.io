@@ -5,6 +5,8 @@
 	</head>
 	<body>
 		<script>
+			window.onerror=function(msg,url,ln,col,err){alert('Error\n\n'+msg+'\nLine '+ln+'\nColumn '+col+'\nStack Trace\n'+err);}
+			
 			const d2r = a => a*Math.PI/180; // simple
 			const clamp = (a, b, c) => Math.min(Math.max(a, b), c)
 
